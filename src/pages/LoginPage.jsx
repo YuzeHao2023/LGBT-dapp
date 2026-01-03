@@ -3,7 +3,8 @@ import { motion } from 'framer-motion';
 import { Wallet, Shield, Heart } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../stores/authStore';
-import { connectMetaMask, connectWalletConnect, generateDID } from '../utils/walletUtils';
+import { connectMetaMask, connectWalletConnect, generateDID, getEncryptionPublicKey } from '../utils/walletUtils';
+import { setEncryptionPublicKeyOnChain } from '../lib/socialContract';
 
 const LoginPage = () => {
   const [isConnecting, setIsConnecting] = useState(false);
@@ -32,7 +33,15 @@ const LoginPage = () => {
             dataVisibility: 'friends',
             anonymousMode: false
           }
-        });
+        });        // 尝试获取并登记用户的加密公钥（若钱包支持并且用户允许）
+        try {
+          const pub = await getEncryptionPublicKey(result.address);
+          if (pub) {
+            await setEncryptionPublicKeyOnChain(pub);
+          }
+        } catch (err) {
+          console.warn('无法注册加密公钥:', err?.message || err);
+        }
         navigate('/home');
       } else {
         console.error(result.error);

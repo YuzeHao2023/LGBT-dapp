@@ -35,3 +35,14 @@ export const connectWalletConnect = async () => {
 export const generateDID = (walletAddress) => {
   return `did:ethr:${walletAddress}`;
 };
+
+export const getEncryptionPublicKey = async (walletAddress) => {
+  if (!window.ethereum) return null;
+  try {
+    const pubKey = await window.ethereum.request({ method: 'eth_getEncryptionPublicKey', params: [walletAddress] });
+    return pubKey; // base64 public key
+  } catch (err) {
+    // user may decline or provider may not support
+    return null;
+  }
+};
