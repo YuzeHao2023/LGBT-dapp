@@ -1,0 +1,25 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="512" height="512" fill="white"/>
+<defs>
+<linearGradient id="rainbow_gradient_hex" x1="85" y1="400" x2="427" y2="112" gradientUnits="userSpaceOnUse">
+<stop offset="0%" stop-color="#4facfe"/>
+<stop offset="50%" stop-color="#00f2fe"/>
+<stop offset="100%" stop-color="#f093fb"/>
+</linearGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+  <feGaussianBlur stdDeviation="10" result="coloredBlur"/>
+  <feMerge>
+  <feMergeNode in="coloredBlur"/>
+  <feMergeNode in="SourceGraphic"/>
+  </feMerge>
+</filter>
+</defs>
+
+<path d="M256 64L427.538 162.5V349.5L256 448L84.4615 349.5V162.5L256 64Z" 
+stroke="url(#rainbow_gradient_hex)" 
+stroke-width="48" 
+stroke-linecap="round" 
+stroke-linejoin="round"
+filter="url(#glow)"/>
+
+</svg>
