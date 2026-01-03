@@ -22,6 +22,7 @@
 - 等待几分钟后访问：
   `https://<OWNER>.github.io/<REPOSITORY>/`（将 `<OWNER>` 和 `<REPOSITORY>` 替换为你的仓库信息）。
 - 当前 workflow 已改为直接把构建产物复制到 `main` 分支的 `docs/` 目录并提交（commit 消息包含 `[skip ci]`，避免触发循环）。
+- 如果 `docs/` 无法成功提交（或 push 返回权限错误），请在仓库 Settings → Secrets → Actions 新增一个具有写 repo 权限的个人访问令牌（PAT），命名为 `GH_PAGES_PAT`，Workflow 会使用它来推送 `docs/` 到 `main`。  
 - 请在仓库 **Settings → Pages** 中把 Source 更改为：**Branch: main** / **Folder: /docs**（Root），保存后等待几分钟生效。
 - 也可以在仓库 Settings → Pages 查看当前发布状态和 URL。
 

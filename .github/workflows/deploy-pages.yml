@@ -49,6 +49,17 @@ jobs:
         run: |
           git config --global user.name "$GIT_AUTHOR_NAME"
           git config --global user.email "$GIT_AUTHOR_EMAIL"
-          git add docs || true
+
+          # stage files
+          git add -A docs || true
           git commit -m "chore(deploy): update docs from workflow [skip ci]" || echo "no changes to commit"
-          git push origin HEAD:main
+
+          # prefer PAT push when provided because GITHUB_TOKEN may be blocked by branch protection
+          if [ -n "${{ secrets.GH_PAGES_PAT }}" ]; then
+            echo "Using GH_PAGES_PAT to push to main"
+            git remote set-url origin https://x-access-token:${{ secrets.GH_PAGES_PAT }}@github.com/${{ github.repository }}.git
+            git push origin HEAD:main || (echo "Push failed with PAT" && exit 1)
+          else
+            echo "GH_PAGES_PAT not set — attempting push with GITHUB_TOKEN (may fail if branch protection rules block it)"
+            git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main || (echo "Push failed with GITHUB_TOKEN" && exit 1)
+          fi
