@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage.jsx";
 import DiscoverPage from "./pages/DiscoverPage.jsx";
 import ChatPage from "./pages/ChatPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
+import CreatePost from "./pages/CreatePost.jsx";
 
 /**
  * Central place for defining the navigation items. Used for navigation components and routing.
@@ -39,6 +40,12 @@ export const navItems = [
     to: "/chat",
     icon: <MessageCircle className="h-4 w-4" />,
     page: <ChatPage />,
+  },
+  {
+    title: "Create",
+    to: "/create",
+    icon: <MessageCircle className="h-4 w-4" />,
+    page: <CreatePost />,
   },
   {
     title: "Profile",
