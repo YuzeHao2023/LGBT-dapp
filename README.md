@@ -251,7 +251,7 @@ License
 
 All Rights Reserved.
 
-贡献者
+Contributors
 -------
 
 
